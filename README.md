@@ -5,6 +5,8 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 
+![Screenshot](Screenshot.png)
+
 ## Project Overview
 
 This project, titled "Functionally Dysfunctional," is a submission to the [Coding with Lewis](https://www.youtube.com/c/CodingwithLewis) Hackathon. The theme for the hackathon is to create a functional project with an unconventional twist. This entry is a unique music player where users control a character on the music progress bar. As the music plays, enemies try to knock the character off the platform. If they succeed, the music restarts from the beginning. The challenge intensifies as the enemies' speed increases with the progression of the music.
