@@ -122,6 +122,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         if (this.body.x > this.rightBound) {
             this.moveLeft();
         }
+
+        this.moveSpeed = this.direction * this.scene.music.seek * 10;
+        this.setVelocityX(this.moveSpeed);
     }
 
     onAnimationComplete(anim) {
@@ -140,14 +143,12 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     moveLeft() {
         this.direction = -1;
-        this.body.setVelocityX(this.direction * this.moveSpeed);
-        this.flipX = false;
+        this.flipX = this.direction > 0;
     }
 
     moveRight() {
         this.direction = 1;
-        this.body.setVelocityX(this.direction * this.moveSpeed);
-        this.flipX = true;
+        this.flipX = this.direction > 0;
     }
 
     flipDirection() {
@@ -169,9 +170,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     respawn() {
         this.x = this.initialPosX;
         this.y = this.initialPosY;
-        //this.moveSpeed = this.moveSpeed * this.scene.music.duration;
 
-        console.log(this.moveSpeed, this.scene.music.duration);
+        this.moveSpeed = 0;
 
         const spawnDelay = Phaser.Math.Between(5000, 15000);
         this.scene.time.delayedCall(
