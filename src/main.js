@@ -67,14 +67,16 @@ class MainScene extends Phaser.Scene {
     }
 
     create() {
+        this.gameStarted = false;
+        this.music = null;
+        this.objectScale = 2.5;
+
         this.sound.setVolume(0.5);
 
         this.screenSize = {
             width: this.sys.game.config.width,
             height: this.sys.game.config.height,
         };
-
-        this.objectScale = 2.5;
 
         this.add
             .image(this.screenSize.width / 2, this.screenSize.height / 2, "bg")
@@ -86,7 +88,6 @@ class MainScene extends Phaser.Scene {
 
         this.currentSongIndex = 0;
         this.selectTrack(this.currentSongIndex);
-        this.playButton.setTexture("play");
 
         this.time.addEvent({
             delay: 1_000,
@@ -131,6 +132,8 @@ class MainScene extends Phaser.Scene {
     }
 
     updateProgressBar() {
+        if (!this.gameStarted) return;
+
         if (this.music.isPlaying) {
             // Calculate the progress of the track
             let progress = this.music.seek / this.music.duration;
@@ -165,7 +168,7 @@ class MainScene extends Phaser.Scene {
     }
 
     playPreviousSong() {
-        if (!this.music) return;
+        if (!this.gameStarted || !this.music) return;
 
         this.music.stop();
 
@@ -180,7 +183,7 @@ class MainScene extends Phaser.Scene {
     }
 
     playNextSong() {
-        if (!this.music) return;
+        if (!this.gameStarted || !this.music) return;
 
         this.music.stop();
 
@@ -312,14 +315,20 @@ class MainScene extends Phaser.Scene {
     }
 
     toggleMusic() {
-        if (!this.music) return;
-
-        if (this.music.isPlaying) {
-            this.music.pause();
-            this.playButton.setTexture("play");
-        } else {
-            this.music.resume();
+        // init audio first time pressing play
+        if (!this.gameStarted) {
+            this.gameStarted = true;
+            this.selectTrack(0);
             this.playButton.setTexture("pause");
+            this.music.play();
+        } else {
+            if (this.music.isPlaying) {
+                this.music.pause();
+                this.playButton.setTexture("play");
+            } else {
+                this.music.resume();
+                this.playButton.setTexture("pause");
+            }
         }
     }
 

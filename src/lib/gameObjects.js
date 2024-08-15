@@ -113,7 +113,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if (!this.body) return;
+        if (!this.scene.gameStarted || !this.body) return;
 
         if (this.body.x < this.leftBound) {
             this.moveRight();
