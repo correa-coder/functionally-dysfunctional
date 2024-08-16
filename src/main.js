@@ -68,7 +68,6 @@ class MainScene extends Phaser.Scene {
 
     create() {
         this.gameStarted = false;
-        this.music = null;
         this.objectScale = 2.5;
 
         this.sound.setVolume(0.5);
@@ -85,9 +84,7 @@ class MainScene extends Phaser.Scene {
         this.createAnims();
         this.initWorld();
         this.setupUI();
-
-        this.currentSongIndex = 0;
-        this.selectTrack(this.currentSongIndex);
+        this.initAudio();
 
         this.time.addEvent({
             delay: 1_000,
@@ -254,8 +251,7 @@ class MainScene extends Phaser.Scene {
 
         this.physics.world.on("worldbounds", (body, up, down, left, right) => {
             if (body.gameObject === this.player && down) {
-                this.music.stop();
-                this.music.play();
+                this.restartMusic();
                 this.player.respawn();
             }
         });
@@ -317,10 +313,14 @@ class MainScene extends Phaser.Scene {
     toggleMusic() {
         // init audio first time pressing play
         if (!this.gameStarted) {
-            this.gameStarted = true;
-            this.selectTrack(0);
-            this.playButton.setTexture("pause");
-            this.music.play();
+            if (this.trackList.length === 0) {
+                this.updateTrackTitle("No track found.");
+            } else {
+                this.gameStarted = true;
+                this.selectTrack(0);
+                this.playButton.setTexture("pause");
+                this.music.play();
+            }
         } else {
             if (this.music.isPlaying) {
                 this.music.pause();
@@ -598,6 +598,25 @@ class MainScene extends Phaser.Scene {
 
             this.player.stopMoving();
         });
+    }
+
+    initAudio() {
+        this.music = null;
+        this.currentSongIndex = 0;
+
+        if (this.trackList.length === 0) {
+            this.updateTrackTitle("No track found.");
+        } else {
+            this.selectTrack(this.currentSongIndex);
+        }
+    }
+
+    restartMusic() {
+        if (!this.music || !this.gameStarted) return;
+
+        this.music.stop();
+        this.music.play();
+        this.playButton.setTexture("pause");
     }
 }
 
