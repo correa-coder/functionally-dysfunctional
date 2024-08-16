@@ -417,7 +417,7 @@ class MainScene extends Phaser.Scene {
                 this.screenSize.width * 0.5,
                 this.screenSize.height * 0.35,
                 "Loading...",
-                { fontSize: `${this.screenSize.width / 20}px` },
+                { fontSize: `${this.screenSize.width * 0.02}px` },
             )
             .setOrigin(0.5)
             .setDepth(5);
