@@ -1,26 +1,7 @@
 import Phaser from "phaser";
 import { Player, Enemy } from "./lib/gameObjects";
+import { formatTrackDuration, Color } from "./lib/utils";
 import fileList from "../public/assets/music/_fileList.json";
-
-/**
- * Given the track seconds, format it as minutes:seconds with padded 0 when necessary
- * @param seconds number
- * @returns string
- */
-function formatTrackDuration(totalSeconds) {
-    let minutes = Math.floor(totalSeconds / 60);
-    let remainingSeconds = Math.floor(totalSeconds % 60);
-
-    // pad minutes and seconds
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    remainingSeconds =
-        remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
-
-    return `${minutes}:${remainingSeconds}`;
-}
-
-// enums
-const Color = { WHITE: 0xffffff, BLACK: 0x000000, GRAY: 0xcccccc };
 
 // scene
 class MainScene extends Phaser.Scene {
@@ -110,23 +91,7 @@ class MainScene extends Phaser.Scene {
         });
     }
 
-    update() {
-        /*
-        if (this.cursors.left.isDown) {
-            this.player.moveLeft();
-        } else if (this.cursors.right.isDown) {
-            this.player.moveRight();
-        } else {
-            this.player.stopMoving();
-        }
-
-        if (this.cursors.up.isDown) {
-            this.player.jump();
-        } else if (this.cursors.down.isDown) {
-            this.player.crouch();
-        }
-            */
-    }
+    update() {}
 
     updateProgressBar() {
         if (!this.gameStarted) return;
