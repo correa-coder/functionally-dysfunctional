@@ -49,6 +49,7 @@ class MainScene extends Phaser.Scene {
 
     create() {
         this.gameStarted = false;
+        this.gameActive = false; // for pause/resume feature
         this.objectScale = 2.5;
 
         this.sound.setVolume(0.5);
@@ -282,6 +283,7 @@ class MainScene extends Phaser.Scene {
                 this.updateTrackTitle("No track found.");
             } else {
                 this.gameStarted = true;
+                this.gameActive = true;
                 this.selectTrack(0);
                 this.playButton.setTexture("pause");
                 this.music.play();
@@ -290,9 +292,11 @@ class MainScene extends Phaser.Scene {
             if (this.music.isPlaying) {
                 this.music.pause();
                 this.playButton.setTexture("play");
+                this.gameActive = false;
             } else {
                 this.music.resume();
                 this.playButton.setTexture("pause");
+                this.gameActive = true;
             }
         }
     }
@@ -521,45 +525,53 @@ class MainScene extends Phaser.Scene {
 
     addControls() {
         this.input.keyboard.on("keydown-A", (event) => {
-            if (this.player.isBeingPushed) return;
+            if (!this.gameActive || this.player.isBeingPushed) return;
 
             this.player.moveLeft();
         });
 
         this.input.keyboard.on("keyup-A", (event) => {
-            if (this.player.isBeingPushed) return;
+            if (!this.gameActive || this.player.isBeingPushed) return;
 
             this.player.stopMoving();
         });
 
         this.input.keyboard.on("keydown-D", (event) => {
-            if (this.player.isBeingPushed) return;
+            if (!this.gameActive || this.player.isBeingPushed) return;
 
             this.player.moveRight();
         });
 
         this.input.keyboard.on("keyup-D", (event) => {
-            if (this.player.isBeingPushed) return;
+            if (!this.gameActive || this.player.isBeingPushed) return;
 
             this.player.stopMoving();
         });
 
         this.input.keyboard.on("keydown-W", (event) => {
-            if (this.player.isBeingPushed || !this.player.body.touching.down)
+            if (
+                !this.gameActive ||
+                this.player.isBeingPushed ||
+                !this.player.body.touching.down
+            )
                 return;
 
             this.player.jump();
         });
 
         this.input.keyboard.on("keydown-S", (event) => {
-            if (this.player.isBeingPushed || !this.player.body.touching.down)
+            if (
+                !this.gameActive ||
+                this.player.isBeingPushed ||
+                !this.player.body.touching.down
+            )
                 return;
 
             this.player.crouch();
         });
 
         this.input.keyboard.on("keyup-S", (event) => {
-            if (this.player.isBeingPushed) return;
+            if (!this.gameActive || this.player.isBeingPushed) return;
 
             this.player.stopMoving();
         });

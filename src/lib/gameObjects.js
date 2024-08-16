@@ -123,7 +123,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
             this.moveLeft();
         }
 
-        this.moveSpeed = this.direction * this.scene.music.seek * 10;
+        this.moveSpeed = this.scene.gameActive
+            ? this.direction * this.scene.music.seek * 10
+            : 0;
         this.setVelocityX(this.moveSpeed);
     }
 
