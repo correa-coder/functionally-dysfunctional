@@ -60,7 +60,7 @@ Make sure you have Node.js installed. You can download it from [Node.js](https:/
 ## Usage
 
 -   **Control the Character**: Use the <kbd>W</kbd>, <kbd>A</kbd>, <kbd>S</kbd>, <kbd>D</kbd> keys to move the character along the music progress bar.
--   **Avoid Enemies**: Enemies will try to knock you off the platform. If they succeed, the music restarts from the beginning.
+-   **Avoid Enemies**: Enemies will try to knock you off the platform. If they succeed, the music restarts from the beginning. Note: Crouching is the only way to avoid being hit.
 -   **Progression**: As the music plays, the enemies' speed increases, making the game more challenging.
 
 ## License
