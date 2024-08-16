@@ -181,15 +181,7 @@ class MainScene extends Phaser.Scene {
                 Color.BLACK,
                 0.3,
             )
-            .setOrigin(0)
-            .setInteractive()
-            .on(
-                "pointerup",
-                (pointer) => {
-                    this.seekMusic(pointer);
-                },
-                this,
-            );
+            .setOrigin(0);
         this.platform = this.platformGroup.add(rectangle);
     }
 
@@ -299,17 +291,6 @@ class MainScene extends Phaser.Scene {
                 this.gameActive = true;
             }
         }
-    }
-
-    seekMusic(pointer) {
-        const relativeX = pointer.x - this.progressBarX;
-        const progress = Phaser.Math.Clamp(
-            relativeX,
-            this.progressBarWidth,
-            0,
-            1,
-        );
-        this.music.seek = progress * this.music.duration;
     }
 
     createAnims() {
